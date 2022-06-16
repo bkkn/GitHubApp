@@ -1,6 +1,6 @@
-package me.bkkn.githubapp.domain
+package me.bkkn.githubapp.domain.repos
 
-import me.bkkn.githubapp.domain.UserEntity
+import me.bkkn.githubapp.domain.entities.UserEntity
 
 interface UsersRepo {
 

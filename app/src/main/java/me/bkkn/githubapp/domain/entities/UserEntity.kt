@@ -1,4 +1,4 @@
-package me.bkkn.githubapp.domain
+package me.bkkn.githubapp.domain.entities
 
 data class UserEntity(
     val login: String,

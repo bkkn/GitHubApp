@@ -2,7 +2,7 @@ package me.bkkn.githubapp.ui.users
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import me.bkkn.githubapp.domain.UserEntity
+import me.bkkn.githubapp.domain.entities.UserEntity
 
 class UsersAdapter : RecyclerView.Adapter<UserViewHolder>() {
     private val data = mutableListOf<UserEntity>()

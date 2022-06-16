@@ -1,9 +1,9 @@
-package me.bkkn.githubapp.data
+package me.bkkn.githubapp.data.dummy
 
 import android.os.Handler
 import android.os.Looper
-import me.bkkn.githubapp.domain.UserEntity
-import me.bkkn.githubapp.domain.UsersRepo
+import me.bkkn.githubapp.domain.entities.UserEntity
+import me.bkkn.githubapp.domain.repos.UsersRepo
 
 private const val DATA_LOADING_FAKE_DELAY = 5_000L
 class FakeUsersRepoImpl : UsersRepo {
