@@ -2,7 +2,7 @@ package me.bkkn.githubapp
 
 import android.os.Handler
 import android.os.Looper
-private const val DATA_LOADING_FAKE_DELAY = 1_000L
+private const val DATA_LOADING_FAKE_DELAY = 5_000L
 class FakeUsersRepoImpl : UsersRepo {
 
     private val data = listOf<UserEntity>(
