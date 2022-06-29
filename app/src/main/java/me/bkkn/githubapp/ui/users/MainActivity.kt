@@ -8,12 +8,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import me.bkkn.githubapp.app
 import me.bkkn.githubapp.databinding.ActivityMainBinding
 import me.bkkn.githubapp.domain.entities.UserEntity
-import me.bkkn.githubapp.domain.repos.UsersRepo
 
 class MainActivity : AppCompatActivity(), UsersContract.View {
     private lateinit var binding: ActivityMainBinding
     private val adapter = UsersAdapter()
-    private val usersRepo : UsersRepo by lazy { app.usersRepo }
+    private lateinit var presenter: UsersContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,32 +20,39 @@ class MainActivity : AppCompatActivity(), UsersContract.View {
         setContentView(binding.root)
 
         initViews()
+
+        presenter = extractPresenter()
+        presenter.attach(this)
+    }
+
+    private fun extractPresenter(): UsersContract.Presenter{
+        return lastCustomNonConfigurationInstance as? UsersContract.Presenter
+            ?: UsersPresenter(app.usersRepo)
+    }
+
+    override fun onDestroy() {
+        presenter.detach()
+        super.onDestroy()
+    }
+
+    override fun onRetainCustomNonConfigurationInstance(): UsersContract.Presenter? {
+        return presenter
+    }
+
+    override fun getLastNonConfigurationInstance(): Any? {
+        return super.getLastNonConfigurationInstance()
     }
 
     private fun initViews() {
         binding.refeshButton.setOnClickListener {
-            loadData()
+            presenter.onRefresh()
         }
         initRecycleView()
         showProgress(false)
     }
 
-    private fun loadData() {
-        showProgress(true)
-        usersRepo.getUsers(
-            onSuccess = {
-                showProgress(false)
-                showUsers(it)
-            },
-            onError = {
-                showProgress(false)
-                showError(it)
-            }
-        )
-    }
-
-    override fun showUsers(data: List<UserEntity>) {
-        adapter.setData(data)
+    override fun showUsers(users: List<UserEntity>) {
+        adapter.setData(users)
     }
 
     override fun showError(throwable: Throwable) {

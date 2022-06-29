@@ -7,7 +7,7 @@ interface UsersContract {
 
     interface View{
         // do minimal things needed for View
-        fun showUsers(data: List<UserEntity>)
+        fun showUsers(users: List<UserEntity>)
         fun showError(throwable: Throwable)
         fun showProgress(inProgress: Boolean)
 
@@ -16,7 +16,7 @@ interface UsersContract {
     interface Presenter{
         // logic is here
         fun attach(view:View)
-        fun detach(view:View)
+        fun detach()
 
         fun onRefresh()
     }
