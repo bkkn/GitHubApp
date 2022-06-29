@@ -8,11 +8,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import me.bkkn.githubapp.app
 import me.bkkn.githubapp.databinding.ActivityMainBinding
 import me.bkkn.githubapp.domain.entities.UserEntity
+import me.bkkn.githubapp.domain.repos.UsersRepo
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), UsersContract.View {
     private lateinit var binding: ActivityMainBinding
     private val adapter = UsersAdapter()
-    private val usersRepo by lazy { app.usersRepo }
+    private val usersRepo : UsersRepo by lazy { app.usersRepo }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,22 +36,27 @@ class MainActivity : AppCompatActivity() {
         usersRepo.getUsers(
             onSuccess = {
                 showProgress(false)
-                onDataLoaded(it)
+                showUsers(it)
             },
             onError = {
                 showProgress(false)
-                onError(it)
+                showError(it)
             }
         )
     }
 
-    private fun onDataLoaded(data: List<UserEntity>) {
+    override fun showUsers(data: List<UserEntity>) {
         adapter.setData(data)
     }
 
-    private fun onError(throwable: Throwable) {
+    override fun showError(throwable: Throwable) {
         Toast.makeText(this, throwable.message, Toast.LENGTH_SHORT).show()
 
+    }
+
+    override fun showProgress(inProgress: Boolean) {
+        binding.progressBar.isVisible = inProgress
+        binding.usersRecyclerView.isVisible = !inProgress
     }
 
     private fun initRecycleView() {
@@ -58,8 +64,4 @@ class MainActivity : AppCompatActivity() {
         binding.usersRecyclerView.adapter = adapter
     }
 
-    private fun showProgress(inProgress: Boolean) {
-        binding.progressBar.isVisible = inProgress
-        binding.usersRecyclerView.isVisible = !inProgress
-    }
 }
