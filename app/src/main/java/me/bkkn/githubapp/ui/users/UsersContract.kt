@@ -10,6 +10,7 @@ interface UsersContract {
         fun showUsers(users: List<UserEntity>)
         fun showError(throwable: Throwable)
         fun showProgress(inProgress: Boolean)
+        fun showProfile()
 
     }
 

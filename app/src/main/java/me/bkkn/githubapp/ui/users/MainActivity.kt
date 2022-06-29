@@ -57,12 +57,15 @@ class MainActivity : AppCompatActivity(), UsersContract.View {
 
     override fun showError(throwable: Throwable) {
         Toast.makeText(this, throwable.message, Toast.LENGTH_SHORT).show()
-
     }
 
     override fun showProgress(inProgress: Boolean) {
         binding.progressBar.isVisible = inProgress
         binding.usersRecyclerView.isVisible = !inProgress
+    }
+
+    override fun showProfile() {
+        TODO("Not yet implemented")
     }
 
     private fun initRecycleView() {
