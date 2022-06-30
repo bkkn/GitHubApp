@@ -11,10 +11,10 @@ import me.bkkn.githubapp.app
 import me.bkkn.githubapp.databinding.ActivityMainBinding
 import me.bkkn.githubapp.domain.entities.UserEntity
 
-class MainActivity : AppCompatActivity(), UsersContract.View {
+class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val adapter = UsersAdapter()
-    private lateinit var presenter: UsersContract.Presenter
+    private lateinit var viewModel: UsersContract.ViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,52 +22,48 @@ class MainActivity : AppCompatActivity(), UsersContract.View {
         setContentView(binding.root)
 
         initViews()
-
-        presenter = extractPresenter()
-        presenter.attach(this)
+        initViewModel()
     }
 
-    private fun extractPresenter(): UsersContract.Presenter{
-        return lastCustomNonConfigurationInstance as? UsersContract.Presenter
-            ?: UsersPresenter(app.usersRepo)
+    private fun initViewModel() {
+        viewModel = extractViewModel()
+        viewModel.progressLiveData.observe(this) { showProgress(it) }
+        viewModel.usersLiveData.observe(this) { showUsers(it) }
+        viewModel.errorLiveData.observe(this) { showError(it) }
     }
 
-    override fun onDestroy() {
-        presenter.detach()
-        super.onDestroy()
+    private fun extractViewModel(): UsersContract.ViewModel {
+        return lastCustomNonConfigurationInstance as? UsersContract.ViewModel
+            ?: UsersViewModel(app.usersRepo)
     }
 
-    override fun onRetainCustomNonConfigurationInstance(): UsersContract.Presenter? {
-        return presenter
-    }
-
-    override fun getLastCustomNonConfigurationInstance(): Any? {
-        return super.getLastNonConfigurationInstance()
+    override fun onRetainCustomNonConfigurationInstance(): UsersContract.ViewModel? {
+        return viewModel
     }
 
     private fun initViews() {
         binding.refeshButton.setOnClickListener {
-            presenter.onRefresh()
+            viewModel.onRefresh()
         }
         initRecycleView()
         showProgress(false)
     }
 
-    override fun showUsers(users: List<UserEntity>) {
+    private fun showUsers(users: List<UserEntity>) {
         adapter.setData(users)
     }
 
-    override fun showError(throwable: Throwable) {
+    private fun showError(throwable: Throwable) {
         Toast.makeText(this, throwable.message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun showProgress(inProgress: Boolean) {
+    private fun showProgress(inProgress: Boolean) {
         binding.progressBar.isVisible = inProgress
         binding.usersRecyclerView.isVisible = !inProgress
     }
 
-    override fun showProfile(id: Int) {
-        val user = presenter.onUserDataRequested(id)
+    private fun showProfile(id: Int) {
+        val user = viewModel.onUserDataRequested(id)
         val intent = Intent(this, ProfileActivity::class.java)
         intent.putExtra(EXTRA_USER_KEY, user)
         startActivity(intent)
@@ -76,11 +72,10 @@ class MainActivity : AppCompatActivity(), UsersContract.View {
     private fun initRecycleView() {
         binding.usersRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.usersRecyclerView.adapter = adapter
-        adapter.setListener(object : UsersAdapter.OnItemClickListener{
+        adapter.setListener(object : UsersAdapter.OnItemClickListener {
             override fun onItemClick(position: Int) {
-               showProfile(position)
+                showProfile(position)
             }
         })
     }
-
 }

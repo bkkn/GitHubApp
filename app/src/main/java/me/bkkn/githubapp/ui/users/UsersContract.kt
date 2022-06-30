@@ -1,23 +1,25 @@
 package me.bkkn.githubapp.ui.users
 
+import androidx.lifecycle.LiveData
 import me.bkkn.githubapp.domain.entities.UserEntity
 
 interface UsersContract {
     // contracts for view-presenter interaction
 
-    interface View{
-        // do minimal things needed for View
-        fun showUsers(users: List<UserEntity>)
-        fun showError(throwable: Throwable)
-        fun showProgress(inProgress: Boolean)
-        fun showProfile(id: Int)
+//    interface View{
+//        // do minimal things needed for View
+////        fun showUsers(users: List<UserEntity>)
+////        fun showError(throwable: Throwable)
+////        fun showProgress(inProgress: Boolean)
+////        fun showProfile(id: Int)
+//
+//    }
 
-    }
-
-    interface Presenter{
+    interface ViewModel{
         // logic is here
-        fun attach(view:View)
-        fun detach()
+        val usersLiveData : LiveData<List<UserEntity>>
+        val errorLiveData : LiveData<Throwable>
+        val progressLiveData : LiveData<Boolean>
 
         fun onRefresh()
 
