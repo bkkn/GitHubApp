@@ -1,10 +1,12 @@
 package me.bkkn.githubapp.ui.users
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import me.bkkn.githubapp.App.Const.EXTRA_USER_KEY
 import me.bkkn.githubapp.app
 import me.bkkn.githubapp.databinding.ActivityMainBinding
 import me.bkkn.githubapp.domain.entities.UserEntity
@@ -39,7 +41,7 @@ class MainActivity : AppCompatActivity(), UsersContract.View {
         return presenter
     }
 
-    override fun getLastNonConfigurationInstance(): Any? {
+    override fun getLastCustomNonConfigurationInstance(): Any? {
         return super.getLastNonConfigurationInstance()
     }
 
@@ -64,13 +66,21 @@ class MainActivity : AppCompatActivity(), UsersContract.View {
         binding.usersRecyclerView.isVisible = !inProgress
     }
 
-    override fun showProfile() {
-        TODO("Not yet implemented")
+    override fun showProfile(id: Int) {
+        val user = presenter.onUserDataRequested(id)
+        val intent = Intent(this, ProfileActivity::class.java)
+        intent.putExtra(EXTRA_USER_KEY, user)
+        startActivity(intent)
     }
 
     private fun initRecycleView() {
         binding.usersRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.usersRecyclerView.adapter = adapter
+        adapter.setListener(object : UsersAdapter.OnItemClickListener{
+            override fun onItemClick(position: Int) {
+               showProfile(position)
+            }
+        })
     }
 
 }

@@ -24,6 +24,10 @@ class UsersPresenter(private val usersRepo: UsersRepo) : UsersContract.Presenter
         loadData()
     }
 
+    override fun onUserDataRequested(id : Int): UserEntity {
+        return userList?.get(id) ?: UserEntity()
+    }
+
     private fun loadData() {
         view?.showProgress(true)
         inProgress = true
@@ -38,7 +42,6 @@ class UsersPresenter(private val usersRepo: UsersRepo) : UsersContract.Presenter
                 view?.showProgress(false)
                 view?.showError(it)
                 inProgress = false
-
             }
         )
     }

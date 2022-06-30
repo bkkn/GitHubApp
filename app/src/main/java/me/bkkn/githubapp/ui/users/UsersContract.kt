@@ -10,7 +10,7 @@ interface UsersContract {
         fun showUsers(users: List<UserEntity>)
         fun showError(throwable: Throwable)
         fun showProgress(inProgress: Boolean)
-        fun showProfile()
+        fun showProfile(id: Int)
 
     }
 
@@ -20,6 +20,8 @@ interface UsersContract {
         fun detach()
 
         fun onRefresh()
+
+        fun onUserDataRequested(id: Int) : UserEntity
     }
 
 }
