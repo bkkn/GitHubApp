@@ -4,12 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import me.bkkn.githubapp.domain.entities.UserEntity
 import me.bkkn.githubapp.domain.repos.UsersRepo
+import me.bkkn.githubapp.utils.SingleEventLiveData
 import java.lang.IllegalStateException
 
 class UsersViewModel(private val usersRepo: UsersRepo) : UsersContract.ViewModel {
 
     override val usersLiveData: LiveData<List<UserEntity>> = MutableLiveData()
-    override val errorLiveData: LiveData<Throwable> = MutableLiveData<Throwable>()
+    override val errorLiveData: LiveData<Throwable> = SingleEventLiveData<Throwable>()
     override val progressLiveData: LiveData<Boolean> = MutableLiveData<Boolean>()
 
     override fun onRefresh() {
