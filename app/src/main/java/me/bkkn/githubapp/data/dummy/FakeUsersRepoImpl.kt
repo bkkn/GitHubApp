@@ -2,6 +2,7 @@ package me.bkkn.githubapp.data.dummy
 
 import android.os.Handler
 import android.os.Looper
+import io.reactivex.rxjava3.core.Single
 import me.bkkn.githubapp.domain.entities.UserEntity
 import me.bkkn.githubapp.domain.repos.UsersRepo
 
@@ -22,4 +23,6 @@ class FakeUsersRepoImpl : UsersRepo {
             onSuccess(data)
         }, DATA_LOADING_FAKE_DELAY)
     }
+
+    override fun getUsers(): Single<List<UserEntity>> = Single.just(data)
 }
