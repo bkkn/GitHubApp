@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.observableButton.setOnClickListener {
             clearLog()
-            Observable.just("Hello1", "hello2", "Hello3")
+            getObservable()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map {
@@ -30,22 +30,22 @@ class MainActivity : AppCompatActivity() {
                     it.reversed()
                 }
 //                .toList()
-                .take(2)
-                .filter {
-                    it.first().toInt().mod(2) == 0
-                }
-                .toList()
-                .flatMapObservable { it.toObservable() }
-                .doOnNext{
+         //       .take(2)
+//                .filter {
+//                    it.first().digitToInt().mod(2) == 0
+//                }
+            //    .toList()
+            //    .flatMapObservable { it.toObservable() }
+                .doOnNext {
                     logMessage("doOnNext")
                 }
-                .doOnComplete(){
+                .doOnComplete() {
                     logMessage("doOnComplete")
                 }
-                .doOnSubscribe(){
+                .doOnSubscribe() {
                     logMessage("doOnSubscribe")
                 }
-                .doOnDispose(){
+                .doOnDispose() {
                     logMessage("doOnDispose")
                 }
                 .subscribeBy(
@@ -67,6 +67,22 @@ class MainActivity : AppCompatActivity() {
             logMessage("completableButton")
         }
 
+    }
+
+    private fun getObservable(): Observable<String> {
+        return Observable.create {
+            it.onNext("Hello1")
+            it.onNext("Hello2")
+            it.onNext("Hello3")
+            it.onNext("Hello4")
+            it.onNext("Hello5")
+        //    it.onComplete()
+
+            Thread{
+                Thread.sleep(1_000)
+                it.onNext("ololo")
+            }.start()
+        }
     }
 
     private fun logMessage(message: String) {

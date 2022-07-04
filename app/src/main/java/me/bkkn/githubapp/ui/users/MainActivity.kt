@@ -2,15 +2,19 @@ package me.bkkn.githubapp.ui.users
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.subjects.PublishSubject
 import me.bkkn.githubapp.App.Const.EXTRA_USER_KEY
 import me.bkkn.githubapp.app
 import me.bkkn.githubapp.databinding.ActivityMainBinding
 import me.bkkn.githubapp.domain.entities.UserEntity
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -51,13 +55,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        binding.refeshButton.setOnClickListener {
+        binding.refeshButton.observableClickListener()
+            .throttleFirst(5_000, TimeUnit.MILLISECONDS)
+            .subscribe() {
             viewModel.onRefresh()
         }
+
         initRecycleView()
         showProgress(false)
     }
-
+    fun View.observableClickListener(): Observable<View> {
+        val publishSubject: PublishSubject<View> = PublishSubject.create()
+        this.setOnClickListener { v -> publishSubject.onNext(v) }
+        return publishSubject
+    }
     private fun showUsers(users: List<UserEntity>) {
         adapter.setData(users)
     }
