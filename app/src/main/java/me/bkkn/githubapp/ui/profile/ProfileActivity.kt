@@ -15,8 +15,8 @@ class ProfileActivity : AppCompatActivity() {
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val user = intent.extras?.getSerializable(App.EXTRA_USER_KEY) as UserEntity
-        binding.profileActivityLoginTextView.text = user.login
-        binding.profileActivityAvatarImageView.load(user.avatarUrl)
+        val user = intent.extras?.getParcelable<UserEntity>(App.EXTRA_USER_KEY)
+        binding.profileActivityLoginTextView.text = user?.login
+        binding.profileActivityAvatarImageView.load(user?.avatarUrl)
     }
 }
