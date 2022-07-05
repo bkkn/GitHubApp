@@ -14,8 +14,7 @@ data class UserEntity(
         parcel.readString().toString(),
         parcel.readLong(),
         parcel.readString().toString()
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(login)

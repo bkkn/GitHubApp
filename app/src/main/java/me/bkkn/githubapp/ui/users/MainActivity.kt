@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity(), UsersContract.View {
         presenter.attach(this)
     }
 
-    private fun extractPresenter(): UsersContract.Presenter{
+    private fun extractPresenter(): UsersContract.Presenter {
         return lastCustomNonConfigurationInstance as? UsersContract.Presenter
             ?: UsersPresenter(app.usersRepo)
     }
@@ -76,9 +76,9 @@ class MainActivity : AppCompatActivity(), UsersContract.View {
     private fun initRecycleView() {
         binding.usersRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.usersRecyclerView.adapter = adapter
-        adapter.setListener(object : UsersAdapter.OnItemClickListener{
+        adapter.setListener(object : UsersAdapter.OnItemClickListener {
             override fun onItemClick(position: Int) {
-               showProfile(position)
+                showProfile(position)
             }
         })
     }
