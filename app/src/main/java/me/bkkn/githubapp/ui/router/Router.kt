@@ -1,13 +1,22 @@
-package me.bkkn.githubapp.ui.users
+package me.bkkn.githubapp.ui.router
 
 import android.content.Intent
-import me.bkkn.githubapp.ui.users.Router.Const.EXTRA_USER_KEY
+import me.bkkn.githubapp.ui.profile.ProfileActivity
+import me.bkkn.githubapp.ui.users.MainActivity
 import java.lang.ref.WeakReference
 
 class Router : RouterInput {
 
-    object Const {
+    companion object Const {
         const val EXTRA_USER_KEY = "extra_user_key"
+        fun launchActivity(userId: Int, mainActivity: MainActivity) {
+            Router().apply {
+                activity = WeakReference<MainActivity>(mainActivity)
+                val intent = determineNextScreen()
+                passDataToNextScreen(userId, intent)
+                activity!!.get()!!.startActivity(intent)
+            }
+        }
     }
 
     var activity: WeakReference<MainActivity>? = null
@@ -20,16 +29,5 @@ class Router : RouterInput {
     override fun passDataToNextScreen(userId: Int, intent: Intent?) {
         //Based on the position or some other data decide the data for the next scene
         intent?.putExtra(EXTRA_USER_KEY, userId)
-    }
-
-    companion object {
-        fun launchActivity(userId: Int, mainActivity: MainActivity) {
-            Router().apply {
-                activity = WeakReference<MainActivity>(mainActivity)
-                val intent = determineNextScreen()
-                passDataToNextScreen(userId, intent)
-                activity!!.get()!!.startActivity(intent)
-            }
-        }
     }
 }

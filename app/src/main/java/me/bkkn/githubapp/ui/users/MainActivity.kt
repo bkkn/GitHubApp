@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import me.bkkn.githubapp.app
 import me.bkkn.githubapp.databinding.ActivityMainBinding
 import me.bkkn.githubapp.domain.entities.UserEntity
+import me.bkkn.githubapp.ui.router.Router
 
 class MainActivity : AppCompatActivity(), UsersContract.View {
     private lateinit var binding: ActivityMainBinding
