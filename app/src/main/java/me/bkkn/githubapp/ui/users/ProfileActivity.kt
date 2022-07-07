@@ -6,6 +6,7 @@ import coil.load
 import me.bkkn.githubapp.App
 import me.bkkn.githubapp.databinding.ActivityProfileBinding
 import me.bkkn.githubapp.domain.entities.UserEntity
+import me.bkkn.githubapp.ui.users.Router.Const.EXTRA_USER_KEY
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
@@ -15,7 +16,7 @@ class ProfileActivity : AppCompatActivity() {
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val user = intent.extras?.getParcelable<UserEntity>(App.EXTRA_USER_KEY)
+        val user = intent.extras?.getParcelable<UserEntity>(EXTRA_USER_KEY)
         binding.profileActivityLoginTextView.text = user?.login
         binding.profileActivityAvatarImageView.load(user?.avatarUrl)
     }
