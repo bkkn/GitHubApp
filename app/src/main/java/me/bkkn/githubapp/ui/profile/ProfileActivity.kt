@@ -8,7 +8,7 @@ import coil.load
 import me.bkkn.githubapp.app
 import me.bkkn.githubapp.databinding.ActivityProfileBinding
 import me.bkkn.githubapp.domain.entities.UserEntity
-import me.bkkn.githubapp.ui.router.Router.Const.EXTRA_USER_KEY
+import me.bkkn.githubapp.ui.navigation.NavigationContract.Const.EXTRA_USER_KEY
 
 class ProfileActivity : AppCompatActivity(), ProfileContract.View {
     private lateinit var binding: ActivityProfileBinding

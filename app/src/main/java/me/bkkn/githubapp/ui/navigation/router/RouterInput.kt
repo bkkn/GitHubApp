@@ -1,4 +1,4 @@
-package me.bkkn.githubapp.ui.router
+package me.bkkn.githubapp.ui.navigation.router
 
 import android.content.Intent
 

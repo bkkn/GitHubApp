@@ -1,19 +1,26 @@
 package me.bkkn.githubapp.ui.users
 
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import me.bkkn.githubapp.app
 import me.bkkn.githubapp.databinding.ActivityMainBinding
 import me.bkkn.githubapp.domain.entities.UserEntity
-import me.bkkn.githubapp.ui.router.Router
+import me.bkkn.githubapp.ui.navigation.NavigationContract
+import me.bkkn.githubapp.ui.navigation.router.Router
 
 class MainActivity : AppCompatActivity(), UsersContract.View {
     private lateinit var binding: ActivityMainBinding
     private val adapter = UsersAdapter()
     private lateinit var presenter: UsersContract.Presenter
+
+    val activityLauncher = registerForActivityResult(NavigationContract()) { result ->
+        // используем result
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,12 +73,7 @@ class MainActivity : AppCompatActivity(), UsersContract.View {
     }
 
     override fun showProfile(id: Int) {
-        Router.launchActivity(id,this)
-
-//        val user = presenter.onUserDataRequested(id)
-//        val intent = Intent(this, ProfileActivity::class.java)
-//        intent.putExtra(EXTRA_USER_KEY, user)
-//        startActivity(intent)
+        Router.launchProfileActivity(id,this)
     }
 
     private fun initRecycleView() {
