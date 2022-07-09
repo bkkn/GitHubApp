@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -16,15 +17,16 @@ import me.bkkn.githubapp.databinding.ActivityMainBinding
 import me.bkkn.githubapp.domain.entities.UserEntity
 import me.bkkn.githubapp.domain.repos.UsersRepo
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.java.KoinJavaComponent.inject
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val adapter = UsersAdapter()
-    private lateinit var viewModel: UsersContract.ViewModel
     private val viewModelDisposable: CompositeDisposable = CompositeDisposable()
-    private val usersRepo: UsersRepo by inject()
+
+    private val viewModel : UsersViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,21 +43,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        viewModel = extractViewModel()
+      //  viewModel = extractViewModel()
         viewModelDisposable.addAll(
             viewModel.progressLiveData.subscribe { showProgress(it) },
             viewModel.usersLiveData.subscribe { showUsers(it) },
             viewModel.errorLiveData.subscribe { showError(it) }
         )
-    }
-
-    private fun extractViewModel(): UsersContract.ViewModel {
-        return lastCustomNonConfigurationInstance as? UsersContract.ViewModel
-            ?: UsersViewModel(usersRepo)
-    }
-
-    override fun onRetainCustomNonConfigurationInstance(): UsersContract.ViewModel? {
-        return viewModel
     }
 
     private fun initViews() {
