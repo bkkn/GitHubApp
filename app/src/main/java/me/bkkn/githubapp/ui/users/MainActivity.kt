@@ -11,6 +11,9 @@ import me.bkkn.githubapp.App.Const.EXTRA_USER_KEY
 import me.bkkn.githubapp.app
 import me.bkkn.githubapp.databinding.ActivityMainBinding
 import me.bkkn.githubapp.domain.entities.UserEntity
+import me.bkkn.githubapp.domain.repos.UsersRepo
+import org.koin.android.ext.android.inject
+import org.koin.java.KoinJavaComponent.inject
 import me.bkkn.githubapp.ui.profile.ProfileActivity
 
 class MainActivity : AppCompatActivity() {
@@ -18,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     private val adapter = UsersAdapter()
     private lateinit var viewModel: UsersContract.ViewModel
     private val viewModelDisposable: CompositeDisposable = CompositeDisposable()
+    private val usersRepo: UsersRepo by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun extractViewModel(): UsersContract.ViewModel {
         return lastCustomNonConfigurationInstance as? UsersContract.ViewModel
-            ?: UsersViewModel(app.usersRepo)
+            ?: UsersViewModel(usersRepo)
     }
 
     override fun onRetainCustomNonConfigurationInstance(): UsersContract.ViewModel? {
