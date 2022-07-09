@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        viewModel = extractViewModel()
+      //  viewModel = extractViewModel()
         prepareObservables()
     }
 
@@ -48,15 +48,6 @@ class MainActivity : AppCompatActivity() {
             viewModel.errorObservable.subscribe { showError(it) },
             binding.refreshButton.btnObservable.subscribe { viewModel.onRefresh() }
         )
-    }
-
-    private fun extractViewModel(): UsersContract.ViewModel {
-        return lastCustomNonConfigurationInstance as? UsersContract.ViewModel
-            ?: UsersViewModel(usersRepo)
-    }
-
-    override fun onRetainCustomNonConfigurationInstance(): UsersContract.ViewModel? {
-        return viewModel
     }
 
     private fun initViews() {
