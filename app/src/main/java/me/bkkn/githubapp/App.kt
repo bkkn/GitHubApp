@@ -3,12 +3,10 @@ package me.bkkn.githubapp
 import android.app.Application
 import android.content.Context
 import androidx.fragment.app.Fragment
-import me.bkkn.githubapp.di.AppComponent
-import me.bkkn.githubapp.di.DaggerAppComponent
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class App : Application() {
-    val appComponent: AppComponent by lazy { DaggerAppComponent.create() }
-
     companion object Const {
         const val EXTRA_USER_KEY = "extra_user_key"
     }
