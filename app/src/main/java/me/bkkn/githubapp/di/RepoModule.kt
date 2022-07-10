@@ -2,6 +2,8 @@ package me.bkkn.githubapp.di
 
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import me.bkkn.githubapp.data.retrofit.GithubApi
 import me.bkkn.githubapp.data.retrofit.RetrofitUsersRepoImpl
 import me.bkkn.githubapp.domain.repos.UsersRepo
@@ -11,7 +13,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-class AppModule {
+@InstallIn(SingletonComponent::class)
+class RepoModule {
     private val baseUrl = GithubApi.githubUrl
 
     @Provides
