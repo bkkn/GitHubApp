@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -16,22 +15,25 @@ import me.bkkn.githubapp.app
 import me.bkkn.githubapp.databinding.ActivityMainBinding
 import me.bkkn.githubapp.domain.entities.UserEntity
 import me.bkkn.githubapp.domain.repos.UsersRepo
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.java.KoinJavaComponent.inject
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val adapter = UsersAdapter()
     private val viewModelDisposable: CompositeDisposable = CompositeDisposable()
 
-    private val viewModel : UsersViewModel by viewModel()
+    @Inject
+    lateinit var usersRepo: UsersRepo
+
+    private val viewModel: UsersViewModel by lazy{UsersViewModel(usersRepo)}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        app.appComponent.inject(this)
 
         initViews()
         initViewModel()
@@ -43,11 +45,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-      //  viewModel = extractViewModel()
+        //  viewModel = extractViewModel()
         viewModelDisposable.addAll(
-            viewModel.progressLiveData.subscribe { showProgress(it) },
-            viewModel.usersLiveData.subscribe { showUsers(it) },
-            viewModel.errorLiveData.subscribe { showError(it) }
+            viewModel.progressObservable.subscribe { showProgress(it) },
+            viewModel.usersObservable.subscribe { showUsers(it) },
+            viewModel.errorObservable.subscribe { showError(it) }
         )
     }
 
