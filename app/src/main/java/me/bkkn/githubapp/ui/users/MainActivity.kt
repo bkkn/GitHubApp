@@ -11,6 +11,8 @@ import me.bkkn.githubapp.App.Const.EXTRA_USER_KEY
 import me.bkkn.githubapp.databinding.ActivityMainBinding
 import me.bkkn.githubapp.domain.entities.UserEntity
 import me.bkkn.githubapp.domain.repos.UsersRepo
+import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 import me.bkkn.githubapp.ui.profile.ProfileActivity
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -18,14 +20,20 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val adapter = UsersAdapter()
-    private val viewModel: UsersViewModel by viewModel()
     private val viewModelDisposable: CompositeDisposable = CompositeDisposable()
-    private val usersRepo: UsersRepo by inject()
+
+    @Inject
+    lateinit var usersRepo: UsersRepo
+
+    private val viewModel: UsersViewModel by lazy{UsersViewModel(usersRepo)}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        app.appComponent.inject(this)
+
         initViews()
         initViewModel()
     }
