@@ -11,9 +11,20 @@ class UsersAdapter : RecyclerView.Adapter<UserViewHolder>() {
         setHasStableIds(true)
     }
 
+    lateinit var listener : OnItemClickListener
+
+    interface OnItemClickListener{
+        fun onItemClick(position : Int)
+    }
+
+    @JvmName("setListener1")
+    fun setListener(listener : OnItemClickListener){
+        this.listener = listener
+    }
+
     override fun getItemId(position: Int) = getItem(position).id
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = UserViewHolder(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = UserViewHolder(parent, listener)
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         holder.bind(getItem(position))

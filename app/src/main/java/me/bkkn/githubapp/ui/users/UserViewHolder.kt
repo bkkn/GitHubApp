@@ -8,14 +8,20 @@ import me.bkkn.githubapp.R
 import me.bkkn.githubapp.domain.entities.UserEntity
 import me.bkkn.githubapp.databinding.ItemUserBinding
 
-class UserViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
+class UserViewHolder(parent: ViewGroup, listener : UsersAdapter.OnItemClickListener) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.item_user, parent, false)
 ) {
+    init {
+        itemView.setOnClickListener {
+            listener.onItemClick(adapterPosition)
+        }
+    }
+
     private val binding = ItemUserBinding.bind(itemView)
 
     fun bind(userEntity: UserEntity) {
-        binding.avaterImageView.load(userEntity.avatarUrl)
-        binding.loginTextView.text = userEntity.login
+        binding.mainActivityAvaterImageView.load(userEntity.avatarUrl)
+        binding.mainActivityLoginTextView.text = userEntity.login
         binding.uidTextView.text = userEntity.id.toString()
     }
 }
