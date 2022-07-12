@@ -4,8 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import me.bkkn.githubapp.App
-import me.bkkn.githubapp.R
-import me.bkkn.githubapp.databinding.ActivityMainBinding
 import me.bkkn.githubapp.databinding.ActivityProfileBinding
 import me.bkkn.githubapp.domain.entities.UserEntity
 

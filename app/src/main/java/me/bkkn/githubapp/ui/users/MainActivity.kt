@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         initViews()
         initViewModel()
     }
@@ -35,9 +34,9 @@ class MainActivity : AppCompatActivity() {
     private fun initViewModel() {
         viewModel = extractViewModel()
         viewModelDisposable.addAll(
-            viewModel.progressLiveData.subscribe { showProgress(it) },
-            viewModel.usersLiveData.subscribe { showUsers(it) },
-            viewModel.errorLiveData.subscribe { showError(it) }
+            viewModel.progressObservable.subscribe { showProgress(it) },
+            viewModel.usersObservable.subscribe { showUsers(it) },
+            viewModel.errorObservable.subscribe { showError(it) }
         )
     }
 
