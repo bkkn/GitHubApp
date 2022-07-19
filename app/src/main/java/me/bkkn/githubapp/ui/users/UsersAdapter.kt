@@ -11,7 +11,7 @@ class UsersAdapter : RecyclerView.Adapter<UserViewHolder>() {
         setHasStableIds(true)
     }
 
-    lateinit var listener : OnItemClickListener
+    private lateinit var listener : OnItemClickListener
 
     interface OnItemClickListener{
         fun onItemClick(position : Int)

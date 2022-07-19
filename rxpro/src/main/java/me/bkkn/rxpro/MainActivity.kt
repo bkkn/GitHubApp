@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Observer
+import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.kotlin.toObservable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -12,6 +14,10 @@ import me.bkkn.rxpro.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     val logBuilder = StringBuilder()
+
+    companion object {
+        var cnt = 0
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,16 +42,16 @@ class MainActivity : AppCompatActivity() {
                 }
                 .toList()
                 .flatMapObservable { it.toObservable() }
-                .doOnNext{
+                .doOnNext {
                     logMessage("doOnNext")
                 }
-                .doOnComplete(){
+                .doOnComplete() {
                     logMessage("doOnComplete")
                 }
-                .doOnSubscribe(){
+                .doOnSubscribe() {
                     logMessage("doOnSubscribe")
                 }
-                .doOnDispose(){
+                .doOnDispose() {
                     logMessage("doOnDispose")
                 }
                 .subscribeBy(
@@ -67,6 +73,43 @@ class MainActivity : AppCompatActivity() {
             logMessage("completableButton")
         }
 
+
+        useRxButton1()
+
+        useRxButton2()
+
+    }
+
+    fun useRxButton1() {
+// мы хотим подписать ретрофит на отслеживание нажатий на кнопку
+        val observer = object : Observer<String> {
+
+            override fun onSubscribe(d: Disposable) {
+                logMessage("subscribed on rxButton")
+            }
+
+            override fun onNext(t: String) {
+                logMessage("rxButton")
+                logMessage(t + cnt++)
+            }
+
+            override fun onError(e: Throwable) {
+            }
+
+            override fun onComplete() {
+
+            }
+
+        }
+
+        binding.rxButton1.clicks(observer)
+    }
+
+    fun useRxButton2() {
+        val onClickAction: (String) -> Unit = {
+            logMessage(it)
+        }
+        binding.rxButton2.clicks(onClickAction)
     }
 
     private fun logMessage(message: String) {

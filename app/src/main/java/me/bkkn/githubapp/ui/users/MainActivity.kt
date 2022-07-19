@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        binding.refeshButton.setOnClickListener {
+        binding.refreshButton.setOnClickListener {
             viewModel.onRefresh()
         }
         initRecycleView()
@@ -81,10 +81,11 @@ class MainActivity : AppCompatActivity() {
     private fun initRecycleView() {
         binding.usersRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.usersRecyclerView.adapter = adapter
-        adapter.setListener(object : UsersAdapter.OnItemClickListener {
-            override fun onItemClick(position: Int) {
-                showProfile(position)
-            }
-        })
+
+//        adapter.setListener(object : UsersAdapter.OnItemClickListener {
+//            override fun onItemClick(position: Int) {
+//                showProfile(position)
+//            }
+//        })
     }
 }

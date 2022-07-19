@@ -42,6 +42,20 @@
             android:layout_weight="1"
             android:singleLine="true"
             android:text="Completable" />
+
+        <me.bkkn.rxpro.RxButton
+            android:id="@+id/rx_button1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:singleLine="true"/>
+
+        <me.bkkn.rxpro.RxButton2
+            android:id="@+id/rx_button2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:singleLine="true"/>
     </LinearLayout>
 
     <TextView
