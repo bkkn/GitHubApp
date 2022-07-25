@@ -11,5 +11,5 @@ interface UsersRepo {
     )
 
     //non Callback based
-    fun getUsers() : Single<List<UserEntity>>
+    fun getUsers(): Single<List<UserEntity>>
 }
