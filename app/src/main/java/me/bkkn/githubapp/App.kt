@@ -10,7 +10,7 @@ class App : Application() {
     val usersRepo: UsersRepo by lazy { RetrofitUsersRepoImpl() }
 
     companion object Const {
-        val EXTRA_USER_KEY = "extra_user_key"
+        const val EXTRA_USER_KEY = "extra_user_key"
     }
 }
 

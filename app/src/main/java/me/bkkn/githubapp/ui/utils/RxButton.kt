@@ -7,8 +7,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
 
-class RxButton(context: Context, attr: AttributeSet)
-    : MaterialButton(context, attr) {
+class RxButton(context: Context, attr: AttributeSet) : MaterialButton(context, attr) {
     val btnObservable: Observable<Unit> = BehaviorSubject.create()
 
     init {
@@ -17,7 +16,7 @@ class RxButton(context: Context, attr: AttributeSet)
         }
     }
 
-    private fun <T: Any> Observable<T>.asSubject(): Subject<T> {
+    private fun <T : Any> Observable<T>.asSubject(): Subject<T> {
         return this as? Subject<T>
             ?: throw IllegalStateException("Cast error: This is not an Observable")
     }
