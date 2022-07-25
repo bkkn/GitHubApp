@@ -6,8 +6,14 @@ import me.bkkn.githubapp.domain.repos.UsersRepo
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
 
-class Di {
+interface Di {
+    val usersRepo: UsersRepo
+    val getRandomString: String
+}
+
+class DiImpl : Di {
     private val baseUrl = GithubApi.githubUrl
     private val retrofit by lazy {
         Retrofit.Builder()
@@ -18,5 +24,9 @@ class Di {
     }
     private val api: GithubApi by lazy { retrofit.create(GithubApi::class.java) }
 
-    val usersRepo: UsersRepo by lazy { RetrofitUsersRepoImpl(api) }
+    override val usersRepo: UsersRepo by lazy { RetrofitUsersRepoImpl(api) }
+    override val getRandomString: String
+        get() =  UUID.randomUUID().toString()
+
+
 }
