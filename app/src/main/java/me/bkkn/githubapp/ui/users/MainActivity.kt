@@ -33,10 +33,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun initViewModel() {
         viewModel = extractViewModel()
+        prepareObservables()
+    }
+
+    private fun prepareObservables() {
         viewModelDisposable.addAll(
             viewModel.progressObservable.subscribe { showProgress(it) },
             viewModel.usersObservable.subscribe { showUsers(it) },
-            viewModel.errorObservable.subscribe { showError(it) }
+            viewModel.errorObservable.subscribe { showError(it) },
+            binding.refreshButton.btnObservable.subscribe { viewModel.onRefresh() }
         )
     }
 
@@ -50,9 +55,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        binding.refeshButton.setOnClickListener {
-            viewModel.onRefresh()
-        }
         initRecycleView()
         showProgress(false)
     }
