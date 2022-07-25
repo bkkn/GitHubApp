@@ -8,12 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import me.bkkn.githubapp.App.Const.EXTRA_USER_KEY
 import me.bkkn.githubapp.databinding.ActivityMainBinding
 import me.bkkn.githubapp.domain.entities.UserEntity
-import java.util.concurrent.TimeUnit
+import me.bkkn.githubapp.ui.profile.ProfileActivity
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
