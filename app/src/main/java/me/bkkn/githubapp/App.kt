@@ -9,7 +9,7 @@ import me.bkkn.githubapp.domain.repos.UsersRepo
 class App : Application() {
     val usersRepo: UsersRepo by lazy { RetrofitUsersRepoImpl() }
 
-    companion object Const{
+    companion object Const {
         val EXTRA_USER_KEY = "extra_user_key"
     }
 }
