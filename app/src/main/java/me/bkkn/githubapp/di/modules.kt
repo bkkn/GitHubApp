@@ -28,19 +28,3 @@ val appModule = module {
         UsersViewModel(get())
     }
 }
-
-/*
-
- private val baseUrl = GithubApi.githubUrl
-    private val retrofit by lazy {
-        Retrofit.Builder()
-            .baseUrl(GithubApi.githubUrl)
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-            .build()
-    }
-    private val api: GithubApi by lazy { retrofit.create(GithubApi::class.java) }
-    private val uiHandelr: Handler by lazy { Handler(Looper.getMainLooper()) }
-
-    val usersRepo: UsersRepo by lazy { RetrofitUsersRepoImpl(api) }
- */

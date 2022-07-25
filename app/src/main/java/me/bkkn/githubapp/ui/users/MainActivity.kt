@@ -8,18 +8,17 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import me.bkkn.githubapp.App.Const.EXTRA_USER_KEY
-import me.bkkn.githubapp.app
 import me.bkkn.githubapp.databinding.ActivityMainBinding
 import me.bkkn.githubapp.domain.entities.UserEntity
 import me.bkkn.githubapp.domain.repos.UsersRepo
-import org.koin.android.ext.android.inject
-import org.koin.java.KoinJavaComponent.inject
 import me.bkkn.githubapp.ui.profile.ProfileActivity
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val adapter = UsersAdapter()
-    private lateinit var viewModel: UsersContract.ViewModel
+    private val viewModel: UsersViewModel by viewModel()
     private val viewModelDisposable: CompositeDisposable = CompositeDisposable()
     private val usersRepo: UsersRepo by inject()
 
@@ -37,7 +36,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-      //  viewModel = extractViewModel()
+        //  viewModel = extractViewModel()
         prepareObservables()
     }
 
