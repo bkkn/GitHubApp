@@ -17,7 +17,7 @@
         android:theme="@style/Theme.GitHubApp"
         tools:targetApi="31">
         <activity
-            android:name=".ui.users.ProfileActivity"
+            android:name=".ui.profile.ProfileActivity"
             android:exported="false" />
         <activity
             android:name=".ui.users.MainActivity"

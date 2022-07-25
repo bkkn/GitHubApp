@@ -1,4 +1,4 @@
-package me.bkkn.githubapp.ui.users
+package me.bkkn.githubapp.ui.profile
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
