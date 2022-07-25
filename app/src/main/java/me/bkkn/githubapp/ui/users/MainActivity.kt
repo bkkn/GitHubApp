@@ -11,6 +11,7 @@ import me.bkkn.githubapp.App.Const.EXTRA_USER_KEY
 import me.bkkn.githubapp.app
 import me.bkkn.githubapp.databinding.ActivityMainBinding
 import me.bkkn.githubapp.domain.entities.UserEntity
+import me.bkkn.githubapp.domain.repos.UsersRepo
 import me.bkkn.githubapp.ui.profile.ProfileActivity
 
 class MainActivity : AppCompatActivity() {
@@ -48,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun extractViewModel(): UsersContract.ViewModel {
         return lastCustomNonConfigurationInstance as? UsersContract.ViewModel
-            ?: UsersViewModel(app.di.usersRepo)
+            ?: UsersViewModel(app.di.get(UsersRepo::class))
     }
 
     override fun onRetainCustomNonConfigurationInstance(): UsersContract.ViewModel? {
