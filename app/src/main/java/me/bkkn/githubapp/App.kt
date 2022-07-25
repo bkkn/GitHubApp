@@ -5,18 +5,14 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import me.bkkn.githubapp.di.Di
 import me.bkkn.githubapp.di.DiImpl
+import me.bkkn.githubapp.di.DiModule
 
 class App : Application() {
 
-    lateinit var di: Di
-    override fun onCreate() {
-        super.onCreate()
-
-        val isMainProcess = true
-        if(isMainProcess){
-            di = DiImpl()
-        }
+    val di: Di = DiImpl().apply {
+        DiModule(this)
     }
+
     companion object Const {
         const val EXTRA_USER_KEY = "extra_user_key"
     }
