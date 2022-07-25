@@ -8,6 +8,7 @@ interface GithubApi {
     companion object {
         const val githubUrl = "https://api.github.com/"
     }
+
     @GET("users")
     fun getUsers(): Single<List<UserEntity>>
 }
