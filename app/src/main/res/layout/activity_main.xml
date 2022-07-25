@@ -7,7 +7,7 @@
     android:padding="16dp"
     tools:context=".ui.users.MainActivity">
 
-    <me.bkkn.githubapp.utils.RxButton
+    <me.bkkn.githubapp.ui.utils.RxButton
         android:id="@+id/refresh_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

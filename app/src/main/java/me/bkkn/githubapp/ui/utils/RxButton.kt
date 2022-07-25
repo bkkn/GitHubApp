@@ -1,4 +1,4 @@
-package me.bkkn.githubapp.utils
+package me.bkkn.githubapp.ui.utils
 
 import android.content.Context
 import android.util.AttributeSet

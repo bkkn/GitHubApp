@@ -1,4 +1,4 @@
-package me.bkkn.githubapp.utils
+package me.bkkn.githubapp.ui.utils
 
 import android.util.Log
 import androidx.annotation.MainThread
