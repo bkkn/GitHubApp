@@ -2,6 +2,8 @@ package me.bkkn.githubapp.ui.users
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.kotlin.subscribeBy
@@ -10,6 +12,7 @@ import io.reactivex.rxjava3.subjects.Subject
 import me.bkkn.dil.inject
 import me.bkkn.githubapp.domain.entities.UserEntity
 import me.bkkn.githubapp.domain.repos.UsersRepo
+import javax.inject.Inject
 
 class UsersViewModel() : UsersContract.ViewModel {
     private val usersRepo: UsersRepo by inject("remote")
