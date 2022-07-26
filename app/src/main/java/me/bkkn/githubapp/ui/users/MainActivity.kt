@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import me.bkkn.dil.get
 import me.bkkn.githubapp.App.Const.EXTRA_USER_KEY
 import me.bkkn.githubapp.databinding.ActivityMainBinding
 import me.bkkn.githubapp.domain.entities.UserEntity
@@ -46,7 +47,10 @@ class MainActivity : AppCompatActivity() {
             viewModel.progressObservable.subscribe { showProgress(it) },
             viewModel.usersObservable.subscribe { showUsers(it) },
             viewModel.errorObservable.subscribe { showError(it) },
-            binding.refreshButton.btnObservable.subscribe { viewModel.onRefresh() }
+            binding.refreshButton.btnObservable.subscribe {
+                viewModel.onRefresh()
+                Toast.makeText(this, get<String>(), Toast.LENGTH_SHORT).show()
+            }
         )
     }
 

@@ -9,14 +9,13 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
+import me.bkkn.dil.inject
 import me.bkkn.githubapp.domain.entities.UserEntity
 import me.bkkn.githubapp.domain.repos.UsersRepo
 import javax.inject.Inject
 
-@HiltViewModel
-class UsersViewModel @Inject constructor(
-    private val usersRepo: UsersRepo
-) : UsersContract.ViewModel, ViewModel() {
+class UsersViewModel() : UsersContract.ViewModel {
+    private val usersRepo: UsersRepo by inject("remote")
 
     override val usersObservable: Observable<List<UserEntity>> = BehaviorSubject.create()
     override val errorObservable: Observable<Throwable> = BehaviorSubject.create()
