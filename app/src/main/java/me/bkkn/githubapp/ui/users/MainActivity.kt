@@ -1,19 +1,14 @@
 package me.bkkn.githubapp.ui.users
 
-import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import me.bkkn.dil.get
-import me.bkkn.githubapp.App.Const.EXTRA_USER_KEY
 import me.bkkn.githubapp.databinding.ActivityMainBinding
 import me.bkkn.githubapp.domain.entities.UserEntity
-import me.bkkn.githubapp.ui.profile.ProfileActivity
 import me.bkkn.githubapp.ui.navigation.NavigationContract
 import me.bkkn.githubapp.ui.navigation.router.Router
 
@@ -86,8 +81,8 @@ class MainActivity : AppCompatActivity() {
         binding.usersRecyclerView.isVisible = !inProgress
     }
 
-    override fun showProfile(id: Int) {
-        Router.launchProfileActivity(id,this)
+    private fun showProfile(id: Int) {
+        Router.launchProfileActivity(id, this)
     }
 
     private fun initRecycleView() {

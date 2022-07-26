@@ -13,3 +13,14 @@ interface UsersRepo {
     //non Callback based
     fun getUsers(): Single<List<UserEntity>>
 }
+
+interface UserRepo {
+    //Callback based
+    fun getUser(id : Int,
+        onSuccess: (UserEntity) -> Unit,
+        onError: ((Throwable) -> Unit)? = null
+    )
+
+    //non Callback based
+    fun getUser(id:Int): Single<UserEntity>
+}

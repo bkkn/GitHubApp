@@ -1,7 +1,5 @@
-package me.bkkn.githubapp.ui.users
+package me.bkkn.githubapp.ui.profile
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.kotlin.subscribeBy
@@ -9,37 +7,39 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
 import me.bkkn.dil.inject
 import me.bkkn.githubapp.domain.entities.UserEntity
+import me.bkkn.githubapp.domain.repos.UserRepo
 import me.bkkn.githubapp.domain.repos.UsersRepo
 
-class UsersViewModel() : UsersContract.ViewModel {
-    private val usersRepo: UsersRepo by inject("remote")
+class ProfileViewModel {
 
-    override val usersObservable: Observable<List<UserEntity>> = BehaviorSubject.create()
-    override val errorObservable: Observable<Throwable> = BehaviorSubject.create()
-    override val progressObservable: Observable<Boolean> = BehaviorSubject.create()
+    private val userRepo: UserRepo by inject("remote")
 
-    override fun onRefresh() {
-        loadData()
-    }
+    val profileObservable: Observable<UserEntity> = BehaviorSubject.create()
+    val errorObservable: Observable<Throwable> = BehaviorSubject.create()
+    val progressObservable: Observable<Boolean> = BehaviorSubject.create()
 
-    override fun onUserDataRequested(id: Int): UserEntity {
-        return usersObservable.blockingFirst()[id]
-    }
-
-    private fun loadData() {
+    private fun loadData(id: Int) {
         progressObservable.mutable().onNext(true)
-        usersRepo.getUsers()
+        userRepo.getUser(id)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
                 onSuccess = {
                     progressObservable.mutable().onNext(false)
-                    usersObservable.mutable().onNext(it)
+                    profileObservable.mutable().onNext(it)
                 },
                 onError = {
                     progressObservable.mutable().onNext(false)
                     errorObservable.mutable().onNext(it)
                 }
             )
+    }
+
+//    fun onUserDataRequested(id: Int): UserEntity {
+//        return usersObservable.blockingFirst()[id]
+//    }
+
+    fun onLaunched(it: Int) {
+
     }
 
     private fun <T : Any> Observable<T>.mutable(): Subject<T> {

@@ -15,5 +15,12 @@ class RetrofitUsersRepoImpl(
         )
     }
 
+    fun getUser(onSuccess: (UserEntity) -> Unit, onError: ((Throwable) -> Unit)?) {
+        api.getUser(0).subscribeBy(
+            onSuccess = { onSuccess.invoke(it) },
+            onError = { onError?.invoke(it) }
+        )
+    }
+
     override fun getUsers(): Single<List<UserEntity>> = api.getUsers()
 }
