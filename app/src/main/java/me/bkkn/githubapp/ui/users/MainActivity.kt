@@ -7,7 +7,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import me.bkkn.dil.get
 import me.bkkn.githubapp.App.Const.EXTRA_USER_KEY
@@ -15,13 +14,12 @@ import me.bkkn.githubapp.databinding.ActivityMainBinding
 import me.bkkn.githubapp.domain.entities.UserEntity
 import me.bkkn.githubapp.ui.profile.ProfileActivity
 
-@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val adapter = UsersAdapter()
     private val viewModelDisposable: CompositeDisposable = CompositeDisposable()
 
-    private val viewModel: UsersViewModel by viewModels()
+    private lateinit var viewModel: UsersContract.ViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +36,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        //  viewModel = extractViewModel()
+        viewModel = extractViewModel()
         prepareObservables()
     }
 
@@ -52,6 +50,15 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, get<String>(), Toast.LENGTH_SHORT).show()
             }
         )
+    }
+
+    private fun extractViewModel(): UsersContract.ViewModel {
+        return lastCustomNonConfigurationInstance as? UsersContract.ViewModel
+            ?: UsersViewModel()
+    }
+
+    override fun onRetainCustomNonConfigurationInstance(): UsersContract.ViewModel? {
+        return viewModel
     }
 
     private fun initViews() {
