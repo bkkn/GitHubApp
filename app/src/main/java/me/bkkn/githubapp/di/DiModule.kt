@@ -2,6 +2,7 @@ package me.bkkn.githubapp.di
 
 import me.bkkn.dil.Module
 import me.bkkn.dil.get
+import me.bkkn.githubapp.data.dummy.DummyUsersRepoImpl
 import me.bkkn.githubapp.data.retrofit.GithubApi
 import me.bkkn.githubapp.data.retrofit.RetrofitUsersRepoImpl
 import me.bkkn.githubapp.domain.repos.UsersRepo
@@ -20,6 +21,7 @@ val appModule = Module() {
             .build()
     }
     singleton<GithubApi> { get<Retrofit>().create(GithubApi::class.java) }
-    singleton<UsersRepo> { RetrofitUsersRepoImpl(get()) }
+    singleton<UsersRepo>("remote") { RetrofitUsersRepoImpl(get()) }
+    singleton<UsersRepo>("local") { DummyUsersRepoImpl(get()) }
     factory { UUID.randomUUID().toString() }
 }

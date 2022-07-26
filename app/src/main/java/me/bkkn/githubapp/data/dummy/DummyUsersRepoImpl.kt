@@ -7,7 +7,7 @@ import me.bkkn.githubapp.domain.repos.UsersRepo
 
 private const val DATA_LOADING_FAKE_DELAY = 5_000L
 
-class FakeUsersRepoImpl(
+class DummyUsersRepoImpl(
     private val handler: Handler
 ) : UsersRepo {
 

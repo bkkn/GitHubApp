@@ -4,7 +4,6 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import me.bkkn.githubapp.domain.entities.UserEntity
 import me.bkkn.githubapp.domain.repos.UsersRepo
-import retrofit2.Retrofit
 
 class RetrofitUsersRepoImpl(
     private val api: GithubApi

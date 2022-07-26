@@ -9,10 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import me.bkkn.dil.get
 import me.bkkn.githubapp.App.Const.EXTRA_USER_KEY
-import me.bkkn.githubapp.app
 import me.bkkn.githubapp.databinding.ActivityMainBinding
 import me.bkkn.githubapp.domain.entities.UserEntity
-import me.bkkn.githubapp.domain.repos.UsersRepo
 import me.bkkn.githubapp.ui.profile.ProfileActivity
 
 class MainActivity : AppCompatActivity() {
