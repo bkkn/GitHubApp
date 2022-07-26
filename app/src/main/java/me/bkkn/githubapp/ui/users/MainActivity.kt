@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import me.bkkn.dil.get
 import me.bkkn.githubapp.App.Const.EXTRA_USER_KEY
 import me.bkkn.githubapp.app
 import me.bkkn.githubapp.databinding.ActivityMainBinding
@@ -43,13 +44,16 @@ class MainActivity : AppCompatActivity() {
             viewModel.progressObservable.subscribe { showProgress(it) },
             viewModel.usersObservable.subscribe { showUsers(it) },
             viewModel.errorObservable.subscribe { showError(it) },
-            binding.refreshButton.btnObservable.subscribe { viewModel.onRefresh() }
+            binding.refreshButton.btnObservable.subscribe {
+                viewModel.onRefresh()
+                Toast.makeText(this, get<String>(), Toast.LENGTH_SHORT).show()
+            }
         )
     }
 
     private fun extractViewModel(): UsersContract.ViewModel {
         return lastCustomNonConfigurationInstance as? UsersContract.ViewModel
-            ?: UsersViewModel(app.di.get(UsersRepo::class))
+            ?: UsersViewModel()
     }
 
     override fun onRetainCustomNonConfigurationInstance(): UsersContract.ViewModel? {
