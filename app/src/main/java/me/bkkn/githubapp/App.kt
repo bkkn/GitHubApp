@@ -3,13 +3,13 @@ package me.bkkn.githubapp
 import android.app.Application
 import android.content.Context
 import androidx.fragment.app.Fragment
-import me.bkkn.dil.Di
-import me.bkkn.githubapp.di.DiModule
+import me.bkkn.githubapp.di.appModule
 
 class App : Application() {
     init {
-        DiModule()
+        appModule.install()
     }
+
     companion object Const {
         const val EXTRA_USER_KEY = "extra_user_key"
     }
